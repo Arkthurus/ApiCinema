@@ -22,7 +22,7 @@ public class ROTA_GET
 	private static void MapearGeneros(WebApplication app)
 	{
 		const string ROTA_GENEROS = $"{ROTA_BASE}/Generos";
-
+		// Todos os Generos
 		app.MapGet(
 			ROTA_GENEROS,
 			(GeneroService generoService) => Ok(generoService.TodosOsGeneros())

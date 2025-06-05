@@ -4,24 +4,40 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Api - Cinema</title>
-	<link rel="stylesheet" href="Style.css">
+	<link rel="stylesheet" href="/CinemaFront/css/Style.css">
 </head>
 <body>
 	<div class="container">
 		<h1>Cadastro de Filme</h1>
-			<div class=>
-				<input type="text" id="Titulo" placeholder="Titulo do Filme"/>
-				<input type="number" id="AnoLancamento" placeholder="Ano de Lançamento"/>
-				<input type="text" id="Genero" placeholder="Genero(os)">
-				<input type="text" id="Diretor" placeholder="Diretor">
-				<input type="text" id="Sinopse" placeholder="Sinopse">
-				<input type="text" id="Ator" placeholder="Ator(es)">
-				<input type="number" id="NotaIMDB" placeholder="Nota no IMDB">
+			<div class=form>
+				<input type="text" id="titulo" placeholder="Titulo do Filme"/>
+				<input type="number" id="anoLancamento" placeholder="Ano de Lançamento"/>
+				<input type="text" id="generos" placeholder="Genero(os)"/>
+				<input type="text" id="diretor" placeholder="Diretor"/>
+				<input type="text" id="sinopse" placeholder="Sinopse"/>
+				<input type="text" id="atores" placeholder="Ator(es)"/>
+				<input type="number" id="notaIMDB" placeholder="Nota no IMDB"/>
 				
-				<button onclick="saveRef()"></button>
+				<button onclick="saveRef()">Cadastrar</button>
 			</div>
 			<ul id="refList"></ul>
 	</div>
-	<script src="JavaScrypt.js"></script>
+	
+	<div class="container">
+		<h1>Buscar Filme</h1>
+		<form action="foundFilm.html" method="get">
+			<input type="number" id="idFilm" name="idFilm" placeholder="Digite o id do filme"/>
+			<button type="submit">Buscar</button>
+		</form>
+	</div>
+	<br>
+	<div class="conteiner">
+		<a href="allFilms.html"><button>Ver Todos os Filmes</button></a><br><br>
+		<a href="allDirectors.html"><Button>Ver Todos os Diretores</Button></a><br><br>
+		<a href="allActors.html"><button>Ver Todos os Atores</button></a><br><br>
+		<a href="allGenres.html"><button>Ver Todos os Generos</button></a><br><br>
+	</div>
+
+	<script src="/CinemaFront/js/JavaScrypt.js" defer></script>
 </body>
 </html>

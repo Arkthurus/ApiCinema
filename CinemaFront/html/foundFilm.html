@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Busca de Filmes</h1>
+    <a href="index.html"><button>Voltar</button></a>
+    <script type="module">
+        import {filmSearch} from "/CinemaFront/js/JavaScrypt.js"
+        const queryString = window.location.search;
+        const urlParams   = new URLSearchParams(queryString);
+
+        // Pegar o Valor de 1 parametro da URL no caso o "idFilm"
+        const idFilm = urlParams.get('idFilm');
+        console.log(idFilm);
+        const busca = await filmSearch(idFilm)//atribui a função de busca a var "busca"
+        if (!busca) {//se n encontrar um valor correspondente no bd retorna erro
+            const mensage = document.createElement("h2")
+            mensage.innerText = "Id informado não existe no Banco de Dados!"
+            document.appendChild(mensage)
+            throw new Error();
+        }
+        //caso contrario mostra o Id informado
+        console.log(busca);
+        const div           	= document.createElement("div");
+		const titulo        	=  document.createElement("h2");
+		const anoLancamento 	=  document.createElement("h3");
+		const generos       	=  document.createElement("h3");
+		const diretor       	=  document.createElement("h3");
+		const atores   			=  document.createElement("h3");
+		const notaIMDB  		=  document.createElement("h3");
+  		const sinopse 			=  document.createElement("h3");
+
+		titulo.innerText  		=  busca.titulo; //"busca" substitui "filme", q é como esta na function "listFilms", pois aki quem tem acesso aos dados é a var "busca"
+		anoLancamento.innerText = `Ano de Lançamento: ${busca.anoLancamento}`;
+		generos.innerText		= `Generos: ${busca.generos}`;
+		diretor.innerText 	    = `Diretor: ${busca.diretor.nome} | Data de Nascimento ${busca.diretor.dataNasc}`;
+		console.log(busca.atores);
+		if (busca.atores && busca.atores.length > 0) { //verifica se busca.atores n é NULL e se é maior q 0
+			let atoresTexto     = "Atores:<br>";
+			busca.atores.forEach((papel) => {//papel = atorPapelDTO
+				atoresTexto    += `- ${papel.ator.nome} (Nascimento: ${papel.ator.dataNasc})<br>`;
+			});
+			atores.innerHTML    = atoresTexto;
+		} else {
+			atores.innerText    = "Atores: Nenhum ator informado";
+		}
+
+		notaIMDB.innerText      = `Nota IMBD: ${busca.notaIMDB}`;
+		sinopse.innerText 		= `Sinopse: ${busca.sinopse}`;
+
+		div.appendChild       (titulo);
+		div.appendChild(anoLancamento);
+		div.appendChild      (generos);
+		div.appendChild  	 (diretor);
+		div.appendChild       (atores);
+		div.appendChild     (notaIMDB);
+		div.appendChild      (sinopse);
+
+        document.body.appendChild(div);//anexa as paradas no body
+    </script>
+</body>
+</html>
