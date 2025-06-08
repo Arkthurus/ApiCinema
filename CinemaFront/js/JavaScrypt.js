@@ -46,33 +46,78 @@ export async function listFilms(){
 		filmesContainer.appendChild(div);
 	})
 }
+//Procurar Filme por Id
 export async function filmSearch(id) {
 	const response = await fetch(`${URL_BASE}/api/v1/Filmes/${id}`);
 	const filme    = await response.json();
 	return filme;
 }
-// listFilms();
-// //Pegar todos os Diretores
-// async function listDirectors(){
-// 	const response  = await fetch(`${URL_BASE}/api/v1/Diretores`);
-// 	const diretores = await response.json();
-// 	console.log(diretores);
-// }
-// listDirectors();
-// async function listActors(){
-// 	const response = await fetch(`${URL_BASE}/api/v1/Atores`);
-// 	const atores   = await response.json();
-// 	console.log(atores);
-// }
-// listActors();
-// async function listGenres(){
-// 	const response = await fetch(`${URL_BASE}/api/v1/Generos`);
-// 	const generos  = await response.json();
-// 	console.log(generos);
-// }
-// listGenres();
-// function saveRef(){
+
+//Pegar todos os Diretores
+export async function listDirectors(){
+	const diretoresContainer = document.querySelector("#diretores-container");
+
+	const response = await fetch(`${URL_BASE}/api/v1/Diretores`);
+	const diretores   = await response.json();
+	console.log(diretores);
+
+	diretores.map((diretores) => {
+		const div     	    = document.createElement("div");
+		const nome    	    =  document.createElement("h2");
+		const dataNasc 	    =  document.createElement("h3");
+		const biografia	    =  document.createElement("h3");
+
+		nome.innerText  	=  diretores.nome;
+		dataNasc.innerText  = `Ano de Nascimento: ${diretores.dataNasc}`;
+		biografia.innerText = `Biografia: ${diretores.Biografia}`;
+
+		div.appendChild     (nome);
+		div.appendChild (dataNasc);
+		div.appendChild(biografia);
+
+		diretoresContainer.appendChild(div);
+	})
+}
+//pegar todos os Atores
+export async function listActors(){
+	const atoresContainer = document.querySelector("#atores-container");
+
+	const response = await fetch(`${URL_BASE}/api/v1/Atores`);
+	const atores   = await response.json();
+	console.log(atores);
+
+	atores.map((ator) => {
+		const div     	    = document.createElement("div");
+		const nome    	    =  document.createElement("h2");
+		const dataNasc 	    =  document.createElement("h3");
+		const biografia	    =  document.createElement("h3");
+
+		nome.innerText  	=  ator.nome;
+		dataNasc.innerText  = `Ano de Nascimento: ${ator.dataNasc}`;
 
 
+		div.appendChild     (nome);
+		div.appendChild (dataNasc);
 
-// }
+
+		atoresContainer.appendChild(div);
+	})
+}
+export async function listGenres(){
+	const generosContainer = document.querySelector("#generos-container");
+
+	const response  = await fetch(`${URL_BASE}/api/v1/Generos`);
+	const generos   = await response.json();
+	console.log(generos);
+
+	generos.map((genero) => {
+		const div     	    = document.createElement("div");
+		const nome    	    =  document.createElement("h2");
+
+		nome.innerText  	=  genero.nome;
+		
+		div.appendChild     (nome);
+
+		generosContainer.appendChild(div);
+	})
+}

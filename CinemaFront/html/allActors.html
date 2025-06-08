@@ -9,8 +9,10 @@
 <body>
     <h1>TODOS OS ATORES</h1>
     <a href="index.html"><button>Voltar</button></a>
-
-
-    <script src="/CinemaFront/js/JavaScrypt.js" defer></script>
-</body>
+    <div id="atores-container">
+        <script type="module">
+            import {listActors} from "/CinemaFront/js/JavaScrypt.js"
+            listActors()
+        </script>
+    </div>
 </html>

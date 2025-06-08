@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,11 @@
 <body>
     <h1>TODOS OS DIRETORES</h1>
     <a href="index.html"><button>Voltar</button></a>
-
-
-    <script src="/CinemaFront/js/JavaScrypt.js" defer></script>
+    <div id="diretores-container">
+        <script type="module">
+            import {listDirectors} from "/CinemaFront/js/JavaScrypt.js"
+            listDirectors();
+        </script>
+    </div>
 </body>
 </html>

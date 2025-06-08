@@ -9,8 +9,11 @@
 <body>
     <h1>TODOS OS GENEROS</h1>
     <a href="index.html"><button>Voltar</button></a>
-
-
-    <script src="/CinemaFront/js/JavaScrypt.js" defer></script>
+    <div id="generos-container">
+        <script type="module">
+            import {listGenres} from "/CinemaFront/js/JavaScrypt.js"
+            listGenres()
+        </script>
+    </div>
 </body>
 </html>
