@@ -16,5 +16,5 @@ public class FilmeGetDTO
 
 	public required DiretorGetDTO Diretor { get; set; }
 
-	public required List<AtorPapel> Atores { get; set; }
+	public required List<FilmeAtorGetDTO> Atores { get; set; }
 }

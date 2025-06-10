@@ -56,7 +56,7 @@ public class ROTA_POST
 
         app.MapPost($"{ROTA_FILMES}", ([FromBody]FilmePostDTO filmePostDto, FilmeService filmeService) =>
         {
-            var filme = filmeService.NovoFilme(filmePostDto);
+            var filme = filmeService.AddFilme(filmePostDto);
             return Created($"{ROTA_FILMES}/{filme.Id}", filme);
         });
     }

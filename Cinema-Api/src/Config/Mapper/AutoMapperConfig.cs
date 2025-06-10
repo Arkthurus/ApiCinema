@@ -22,7 +22,6 @@ public class AutoMapperConfig
 
 		// Genero
 		cfg.CreateMap<Genero, GeneroGetDTO>();
-		cfg.CreateMap<GeneroPostDTO, Genero>();
 
 		// Filme
 		cfg.CreateMap<FilmePostDTO, Filme>();
@@ -42,9 +41,9 @@ public class AutoMapperConfig
 				dest => dest.Atores,
 				opt =>
 					opt.MapFrom(src =>
-						src.FilmesAtores.Select(fa => new AtorPapel
+						src.FilmesAtores.Select(fa => new FilmeAtorGetDTO
 							{
-								Ator = new(fa.Ator.Nome, fa.Ator.DataNasc),
+								Ator = new(fa.Ator.Id, fa.Ator.Nome, fa.Ator.DataNasc),
 								Papel = fa.Papel,
 							})
 							.ToList()

@@ -1,43 +1,146 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Api - Cinema</title>
 	<link rel="stylesheet" href="/CinemaFront/css/Style.css">
 </head>
+
 <body>
 	<div class="container">
 		<h1>Cadastro de Filme</h1>
-			<div class=form>
-				<input type="text" id="titulo" placeholder="Titulo do Filme"/>
-				<input type="number" id="anoLancamento" placeholder="Ano de Lançamento"/>
-				<input type="text" id="generos" placeholder="Genero(os)"/>
-				<input type="text" id="diretor" placeholder="Diretor"/>
-				<input type="text" id="sinopse" placeholder="Sinopse"/>
-				<input type="text" id="atores" placeholder="Ator(es)"/>
-				<input type="number" id="notaIMDB" placeholder="Nota no IMDB"/>
-				
-				<button onclick="saveRef()">Cadastrar</button>
-			</div>
-			<ul id="refList"></ul>
+		<form id="formCadastro" class="form">
+			<fieldset>
+				<legend>Filme</legend>
+				<input type="text" id="titulo" placeholder="Titulo do Filme" />
+				<input type="number" id="anoLancamento" placeholder="Ano de Lançamento" />
+
+				<!-- Container onde os selects de gênero serão inseridos dinamicamente -->
+				<div id="generos-container">
+					<!-- Aqui os gêneros adicionados aparecerão -->
+				</div>
+				<button type="button" id="btn-adicionar-genero">Adicionar Gênero</button>
+				<!-- Template que serve como molde para cada novo gênero -->
+				<template id="genero-template">
+					<div class="genero-item">
+						<select class="genero-select">
+
+						</select>
+					</div>
+				</template>
+				</template>
+				<input type="text" id="sinopse" placeholder="Sinopse" />
+				<input type="number" id="notaIMDB" placeholder="Nota no IMDB" /><br>
+				</select>
+			</fieldset>
+			<br>
+			<fieldset>
+				<legend>Diretor</legend>
+				<div class="diretor">
+					<input type="text" placeholder="Nome do Diretor" class="diretor-nome" />
+					<input type="date" placeholder="Data de Nascimento" class="diretor-dataNasc" />
+					<input type="text" placeholder="Biografia" class="diretor-biografia" />
+				</div>
+			</fieldset>
+			<br>
+			<fieldset>
+				<legend>Atores</legend>
+				<div id="papeis-container">
+					<template id="papel-template">
+						<fieldset>
+							<legend class="papel-legenda">{Papel}</legend>
+
+							<label class="ator-nome-label" for="ator-nome">Nome do ator:</label>
+							<input class="ator-nome" type="text" name="ator-nome" required>
+
+							<label for="ator-dataNasc">Data de nascimento do ator:</label>
+							<input class="ator-dataNasc" type="date" name="ator-dataNasc" required>
+
+							<label for="papel">Papel:</label>
+							<input class="papel" type="text" name="papel" required>
+						</fieldset>
+					</template>
+					<button type="button" id="btn-adicionar-papel">Adicionar papel</button>
+				</div>
+			</fieldset>
+			<br>
+			<button type="submit" style="width: 100%;">Cadastrar</button>
+		</form>
 	</div>
-	
+
 	<div class="container">
 		<h1>Buscar Filme</h1>
 		<form action="foundFilm.html" method="get">
-			<input type="number" id="idFilm" name="idFilm" placeholder="Digite o id do filme"/>
+			<input type="number" id="idFilm" name="idFilm" placeholder="Digite o id do filme" />
 			<button type="submit">Buscar</button>
 		</form>
+
 	</div>
-	<br>
-	<div class="conteiner">
-		<a href="allFilms.html"><button>Ver Todos os Filmes</button></a><br><br>
-		<a href="allDirectors.html"><Button>Ver Todos os Diretores</Button></a><br><br>
-		<a href="allActors.html"><button>Ver Todos os Atores</button></a><br><br>
-		<a href="allGenres.html"><button>Ver Todos os Generos</button></a><br><br>
+	<div class="container">
+		<a href="allFilms.html"><button>Ver Todos os Filmes</button></a>
+		<a href="allDirectors.html"><Button>Ver Todos os Diretores</Button></a>
+		<a href="allActors.html"><button>Ver Todos os Atores</button></a>
+		<a href="allGenres.html"><button>Ver Todos os Generos</button></a>
 	</div>
 
-	<script src="/CinemaFront/js/JavaScrypt.js" defer></script>
+	<!-- 
+	Script JavaScript para controlar o funcionamento da adição de gêneros
+	Ele fica no final do body para garantir que o DOM já esteja carregado 
+	-->
+	<script type="module">
+		import { listGenres } from "/CinemaFront/js/JavaScrypt.js";
+		import { saveRef } from "/CinemaFront/js/JavaScrypt.js";
+		// Esta variável armazenará os gêneros obtidos da API para reaproveitamento
+		let generosDisponiveis = [];
+
+		// Função para buscar gêneros do backend e armazenar
+		async function carregarGeneros() {
+			const response = await fetch("http://localhost:5231/api/v1/Genero");
+			const generos = await response.json();
+			generosDisponiveis = generos.map(g => g.nome);
+		}
+		// Pega o botão "Adicionar Gênero" pelo ID e adiciona um ouvinte de clique
+		document.getElementById("btn-adicionar-genero").addEventListener("click", function () {
+			const container = document.getElementById("generos-container");
+			const template = document.getElementById("genero-template");
+			const clone = template.content.cloneNode(true);
+
+			const select = clone.querySelector("select");
+
+			// Preenche o select com os gêneros carregados do backend
+			generosDisponiveis.forEach(genero => {
+				const option = document.createElement("option");
+				option.value = genero;
+				option.textContent = genero;
+				select.appendChild(option);
+			});
+
+			container.appendChild(clone);
+		});
+		carregarGeneros();
+		//----------------------------------------------------------------------------------------------
+		// Pega o botão "Adicionar Pepel" pelo ID e adiciona um ouvinte de clique
+		document.getElementById("btn-adicionar-papel").addEventListener("click", function () {
+			// Pega o container onde os papeis serão inseridos
+			const container = document.getElementById("papeis-container");
+
+			// Pega o template definido no HTML para o papel
+			const template = document.getElementById("papel-template");
+
+			// Clona o conteúdo do template (um novo fieldset com inputs)
+			const clone = template.content.cloneNode(true).querySelector("fieldset");
+
+			// Adiciona o clone dentro do container, mostrando os novos campos na página
+			container.appendChild(clone);
+		});
+		//----------------------------------------------------------------------------------------------
+		document.getElementById("formCadastro").addEventListener('submit', async (e) => {
+			e.preventDefault()
+			await saveRef()
+		});
+	</script>
 </body>
+
 </html>

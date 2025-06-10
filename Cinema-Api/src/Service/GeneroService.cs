@@ -39,7 +39,7 @@ public class GeneroService(MasterContext masterContext)
 		return genero;
 	}
 
-	public Genero GetExistenteOuCriar(string nome) // TODO trocar string por GeneroDTO quando a classe for criada
+	public Genero GetExistenteOuCriar(string nome)
 	{
 		var genero = SingleByNome(nome);
 

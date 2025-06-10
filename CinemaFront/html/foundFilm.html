@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+	<link rel="stylesheet" href="/CinemaFront/css/Style.css">
 </head>
 <body>
     <h1>Busca de Filmes</h1>
     <a href="index.html"><button>Voltar</button></a>
     <script type="module">
         import {filmSearch} from "/CinemaFront/js/JavaScrypt.js"
+		import {deleteFilm} from "/CinemaFront/js/JavaScrypt.js"
         const queryString = window.location.search;
         const urlParams   = new URLSearchParams(queryString);
 
@@ -20,7 +22,7 @@
         if (!busca) {//se n encontrar um valor correspondente no bd retorna erro
             const mensage = document.createElement("h2")
             mensage.innerText = "Id informado não existe no Banco de Dados!"
-            document.appendChild(mensage)
+            document.body.appendChild(mensage)
             throw new Error();
         }
         //caso contrario mostra o Id informado
@@ -60,7 +62,29 @@
 		div.appendChild     (notaIMDB);
 		div.appendChild      (sinopse);
 
+		div.classList.add("filme-card");
+
         document.body.appendChild(div);//anexa as paradas no body
-    </script>
+
+
+		//Botão de deletar
+		const deleteBtn = document.createElement("button");
+		deleteBtn.innerText = "Deletar Filme";
+		deleteBtn.onclick = async () => { //instancia um func asyncrona para poder usar o "await" na linha 73
+		const confirmado = confirm("Tem certeza que deseja deletar este filme?");
+		if (confirmado) {
+			const sucesso = await deleteFilm(idFilm); // mesmo id da URL, retorna TRUE/FALSE
+		if (sucesso) {
+			alert("Filme deletado com sucesso!");
+			window.location.href = "index.html"; // volta pra lista ou homepage
+		} else {
+			alert("Erro ao deletar o filme.");
+		}
+		}else{alert("Ação de exclusão cancelada.")};//aviso de cancelamento de exclusão
+		};
+		document.body.appendChild(deleteBtn);
+		
+	</script>
+	
 </body>
 </html>

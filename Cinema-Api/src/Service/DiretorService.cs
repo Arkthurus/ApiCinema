@@ -15,19 +15,6 @@ public class DiretorService(MasterContext masterContext)
 
 	private readonly Mapper Mapper = new(new MapperConfiguration(AutoMapperConfig.Configurar));
 
-	public Diretor NovoDiretor(DiretorGetDTO diretor)
-	{
-		var existe = SingleByNomeAndDataNasc(diretor.Nome, diretor.DataNasc) is not null;
-
-		if (existe)
-			throw new AlreadyExistsException(
-				"Uma entidade Diretor com Nome e Data de Nascimento iguais ao fornecido já existe."
-			);
-
-		Diretor novoDiretor = CriarDiretorSemVerificar(diretor);
-		return novoDiretor;
-	}
-
 	public DiretorGetDTO UmDiretor(int Id)
 	{
 		var diretor = _masterContext
@@ -83,7 +70,7 @@ public class DiretorService(MasterContext masterContext)
 		_masterContext.SaveChanges();
 	}
 
-	public Diretor GetExistenteOuCriar(DiretorGetDTO dto)
+	public Diretor GetExistenteOuCriar(DiretorPostDTO dto)
 	{
 		var diretor = SingleByNomeAndDataNasc(dto.Nome, dto.DataNasc);
 
@@ -104,14 +91,9 @@ public class DiretorService(MasterContext masterContext)
 
 	#region Métodos Privados
 
-	private Diretor CriarDiretorSemVerificar(DiretorGetDTO diretor)
+	private Diretor CriarDiretorSemVerificar(DiretorPostDTO diretor)
 	{
-		var novoDiretor = new Diretor
-		{
-			Nome = diretor.Nome,
-			DataNasc = diretor.DataNasc,
-			Biografia = diretor.Biografia!,
-		};
+		var novoDiretor = Mapper.Map<DiretorPostDTO, Diretor>(diretor);
 
 		_masterContext.Diretor.Add(novoDiretor);
 		_masterContext.SaveChanges();

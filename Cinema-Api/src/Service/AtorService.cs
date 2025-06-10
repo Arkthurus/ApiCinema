@@ -62,4 +62,33 @@ public class AtorService(MasterContext masterContext)
 		_masterContext.Ator.Remove(_masterContext.Ator.First(a => a.Id == Id));
 		_masterContext.SaveChanges();
 	}
+
+	public Ator GetExistenteOuCriar(AtorPostDTO dto)
+	{
+		var ator = SingleByNomeAndDataNasc(dto.Nome, dto.DataNasc);
+
+		ator ??= CriarAtorSemVerificar(dto); // Se for nulo, cria um novo
+
+		return ator;
+	}
+
+	private Ator? SingleByNomeAndDataNasc(string nome, DateOnly dataNasc)
+	{
+		return _masterContext
+			.Ator.AsEnumerable()
+			.FirstOrDefault(a =>
+				a.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase)
+				&& a.DataNasc.Equals(dataNasc)
+			);
+	}
+
+	private Ator CriarAtorSemVerificar(AtorPostDTO dto)
+	{
+		var novoAtor = Mapper.Map<AtorPostDTO, Ator>(dto);
+
+		_masterContext.Ator.Add(novoAtor);
+		_masterContext.SaveChanges();
+
+		return novoAtor;
+	}
 }
