@@ -101,7 +101,7 @@ export async function listDirectors(){
 
 		nome.innerText  	=  diretores.nome;
 		dataNasc.innerText  = `Ano de Nascimento: ${diretores.dataNasc}`;
-		biografia.innerText = `Biografia: ${diretores.Biografia}`;
+		biografia.innerText = `Biografia: ${diretores.biografia}`;
 
 		div.appendChild     (nome);
 		div.appendChild (dataNasc);
@@ -223,6 +223,7 @@ function montarObjetoFilme() {
     anoLancamento: parseInt(document.getElementById("anoLancamento").value),
     sinopse: document.getElementById("sinopse").value.trim(),
     notaIMDB: parseFloat(document.getElementById("notaIMDB").value),
+	preco: parseFloat(document.getElementById("preco").value),
     generos: coletarGenerosSelecionados(),
     diretor: {
       nome: document.querySelector(".diretor-nome")?.value.trim() ?? "",

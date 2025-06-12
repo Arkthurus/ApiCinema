@@ -12,6 +12,8 @@ public class FilmeGetDTO
 
 	public required float NotaIMDB { get; set; }
 
+	public required float Preco { get; set; }
+
 	public required List<string> Generos { get; set; }
 
 	public required DiretorGetDTO Diretor { get; set; }

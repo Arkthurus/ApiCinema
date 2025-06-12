@@ -109,8 +109,6 @@ public class FilmeService(
 
 		var filme = Mapper.Map<FilmePostDTO, Filme>(filmeDto);
 
-		var diretor = _diretorService.GetExistenteOuCriar(filmeDto.Diretor);
-
 		_masterContext.Filme.Add(filme);
 		_masterContext.SaveChanges();
 

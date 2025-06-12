@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Cinema_Api.src.Models;
 
 public class Filme
@@ -11,6 +13,9 @@ public class Filme
 	public string Sinopse { get; set; } = "";
 
 	public float NotaIMDB { get; set; }
+
+	[Column(TypeName = "Decimal")]
+	public float Preco { get; set; }
 
 	public required int DiretorId { get; set; }
 

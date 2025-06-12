@@ -10,6 +10,8 @@ public class FilmePostDTO
 
 	public required float NotaIMDB { get; set; }
 
+	public required float Preco { get; set; }
+
 	public required List<string> Generos { get; set; }
 
 	public required DiretorPostDTO Diretor { get; set; }
